@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RestSharp;
 using TechChallenge.IntegrationTests.Facades;
 using TechChallenge.Models;
 using TechTalk.SpecFlow;
@@ -8,6 +8,7 @@ using TechTalk.SpecFlow;
 namespace TechChallenge.IntegrationTests
 {
     [Binding]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class FulfillmentSteps
     {
         private Order _order;
@@ -26,7 +27,7 @@ namespace TechChallenge.IntegrationTests
             _order = new Order
             {
                 OrderId = 1,
-                Status = "AwaitingFulfillment",
+                Status = FulfillmentStatus.Pending,
                 DateCreated = DateTime.Now
             };
         }
@@ -69,9 +70,7 @@ namespace TechChallenge.IntegrationTests
         [Then(@"I expect that product quantity in the Legacy system is updated")]
         public void ThenIExpectThatProductQuantityInTheLegacySystemIsUpdated()
         {
-            var request = new RestRequest("product/{productId}", Method.GET) {RequestFormat = DataFormat.Json};
-
-            var product = _warehouseFacade.GetProduct(request, _product.ProductId);
+            var product = _warehouseFacade.GetProduct(_product.ProductId);
             int expected = _product.QuantityOnHand - _order.Items[0].Quantity;
 
             Assert.AreEqual(expected, product.QuantityOnHand, $"Expected {expected} products on hand, but was {product.QuantityOnHand}");

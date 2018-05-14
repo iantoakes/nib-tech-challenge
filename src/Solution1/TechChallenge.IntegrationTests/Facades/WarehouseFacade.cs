@@ -7,11 +7,12 @@ namespace TechChallenge.IntegrationTests.Facades
 {
     public class WarehouseFacade
     {
-        const string TechChallengeUrl = "http://localhost/TechChallenge";
+        private const string TechChallengeUrl = "http://localhost/TechChallenge";
+        private const string RoutePrefix = "/api/v1/warehouse";
 
         public FulfillmentResponse FulfillOrder(int orderId)
         {
-            var request = new RestRequest("fulfilment", Method.POST) { RequestFormat = DataFormat.Json };
+            var request = new RestRequest($"{RoutePrefix}/fulfilment", Method.POST) { RequestFormat = DataFormat.Json };
 
             var body = new { OrderIds = new[] { orderId } };
             request.AddBody(body);
@@ -21,16 +22,13 @@ namespace TechChallenge.IntegrationTests.Facades
 
             Assert.IsTrue(response.IsSuccessful, $"StatusCode: {response.StatusCode} on fulfillment");
 
-            //return new FulfillmentResponse();
-
             var fresponse = JsonConvert.DeserializeObject<FulfillmentResponse>(response.Content);
-            ////var fresponse = jobj.ToObject<FulfillmentResponse>();
             return fresponse;
         }
 
         public Order GetOrder(int orderId)
         {
-            var request = new RestRequest("order/{orderId}", Method.GET) { RequestFormat = DataFormat.Json };
+            var request = new RestRequest($"{RoutePrefix}/order/{orderId}", Method.GET) { RequestFormat = DataFormat.Json };
             request.AddUrlSegment("orderId", orderId);
 
             var client = new RestClient(TechChallengeUrl);
@@ -42,8 +40,19 @@ namespace TechChallenge.IntegrationTests.Facades
             return order;
         }
 
-        public Product GetProduct(RestRequest request, int productId)
+        public void AddOrder(Order order)
         {
+            var request = new RestRequest($"{RoutePrefix}/order", Method.POST) { RequestFormat = DataFormat.Json };
+            request.AddBody(order);
+
+            var client = new RestClient(TechChallengeUrl);
+            var response = client.Execute(request);
+            Assert.IsTrue(response.IsSuccessful, $"Error adding order statusCode: {response.StatusCode}");
+        }
+
+        public Product GetProduct(int productId)
+        {
+            var request = new RestRequest($"{RoutePrefix}/product/{productId}", Method.GET) { RequestFormat = DataFormat.Json };
             request.AddUrlSegment("productId", productId);
 
             var client = new RestClient(TechChallengeUrl);
@@ -55,20 +64,12 @@ namespace TechChallenge.IntegrationTests.Facades
             return product;
         }
 
-        public void AddOrder(Order order)
-        {
-            var client = new RestClient("http://localhost/TechChallenge");
-            var request = new RestRequest("order", Method.POST) { RequestFormat = DataFormat.Json };
-            request.AddBody(order);
-            var response = client.Execute(request);
-            Assert.IsTrue(response.IsSuccessful, $"Error adding order statusCode: {response.StatusCode}");
-        }
-
         public void AddProduct(Product product)
         {
-            var client = new RestClient("http://localhost/TechChallenge");
-            var request = new RestRequest("product", Method.POST) { RequestFormat = DataFormat.Json };
+            var request = new RestRequest($"{RoutePrefix}/product", Method.POST) { RequestFormat = DataFormat.Json };
             request.AddBody(product);
+
+            var client = new RestClient(TechChallengeUrl);
             var response = client.Execute(request);
             Assert.IsTrue(response.IsSuccessful, $"Error adding product statusCode: {response.StatusCode}");
         }

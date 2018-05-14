@@ -28,7 +28,7 @@
   "orders": [
     {
       "orderId": 1122,
-      "status": "unfulfilled",
+      "status": "Pending",
       "dateCreated": "2018-05-09 10:59",
       "items": [
         {
@@ -47,7 +47,7 @@
     },
     {
       "orderId": 1123,
-      "status": "unfulfilled",
+      "status": "Pending",
       "dateCreated": "2018-05-09 14:21",
       "items": [
         {
@@ -59,38 +59,57 @@
         {
           "orderId": 1123,
           "productId": 2,
-          "quantity": 7,
+          "quantity": 3,
           "costPerItem": 20.95
         },
         {
           "orderId": 1123,
           "productId": 3,
-          "quantity": 7,
+          "quantity": 5,
           "costPerItem": 20.95
         }
       ]
     },
     {
       "orderId": 1124,
-      "status": "unfulfilled",
+      "status": "Pending",
       "dateCreated": "2018-05-09 14:22",
       "items": [
         {
           "orderId": 1124,
           "productId": 1,
-          "quantity": 4,
+          "quantity": 1,
           "costPerItem": 10.45
         },
         {
           "orderId": 1124,
           "productId": 2,
-          "quantity": 7,
+          "quantity": 3,
+          "costPerItem": 20.95
+        }
+      ]
+    },
+    {
+      "orderId": 1125,
+      "status": "Pending",
+      "dateCreated": "2018-05-09 14:22",
+      "items": [
+        {
+          "orderId": 1125,
+          "productId": 1,
+          "quantity": 6,
+          "costPerItem": 10.45
+        },
+        {
+          "orderId": 1125,
+          "productId": 2,
+          "quantity": 8,
           "costPerItem": 20.95
         },
         {
-          "orderId": 1124,
+          "orderId": 1125,
           "productId": 3,
-          "quantity": 7,
+          "quantity": 3,
           "costPerItem": 20.95
         }
       ]

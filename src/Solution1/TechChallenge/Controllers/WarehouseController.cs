@@ -6,6 +6,7 @@ using TechChallenge.Services;
 
 namespace TechChallenge.Controllers
 {
+    [RoutePrefix("api/v1/warehouse")]
     public class WarehouseController : ApiController
     {
         private readonly IWarehouseService _warehouseService;

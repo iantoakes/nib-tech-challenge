@@ -4,5 +4,6 @@
     {
         public const string Error = "Error:Unfulfilled";
         public const string Success = "Fulfilled";
+        public const string Pending = "Pending";
     }
 }
