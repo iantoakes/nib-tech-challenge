@@ -170,7 +170,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IWarehouseService.cs" />
     <Compile Include="Services\WarehouseService.cs" />
-    <Compile Include="WebApiConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
