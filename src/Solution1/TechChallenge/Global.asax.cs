@@ -1,24 +1,22 @@
 ﻿using System.Reflection;
 using System.Web;
 using System.Web.Http;
-//using System.Web.Mvc;
-//using System.Web.Optimization;
-using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.WebApi;
+using NLog;
 using TechChallenge.Services;
 
 namespace TechChallenge
 {
     public class WebApiApplication : HttpApplication
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
         protected void Application_Start()
         {
-            //AreaRegistration.RegisterAllAreas();
+            Logger.Info("--------------------App startup--------------------");
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            //RouteConfig.RegisterRoutes(RouteTable.Routes);
-            //BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             var builder = new ContainerBuilder();
 

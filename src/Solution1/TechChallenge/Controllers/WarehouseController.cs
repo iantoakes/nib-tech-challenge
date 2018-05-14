@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using NLog;
 using TechChallenge.Models;
 using TechChallenge.Services;
 
@@ -10,6 +11,8 @@ namespace TechChallenge.Controllers
     public class WarehouseController : ApiController
     {
         private readonly IWarehouseService _warehouseService;
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
 
         public WarehouseController(IWarehouseService warehouseService)
         {
@@ -53,6 +56,7 @@ namespace TechChallenge.Controllers
             }
             catch (Exception ex)
             {
+                Logger.Error(ex, ex.Message);
                 return BadRequest(ex.Message);
             }
         }
