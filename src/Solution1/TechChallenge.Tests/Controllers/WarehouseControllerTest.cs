@@ -22,14 +22,19 @@ namespace TechChallenge.Tests.Controllers
             int orderId = 1;
 
             var product = new Product { ProductId = productId, QuantityOnHand = 0 };
+
             var order = new Order
             {
                 OrderId = orderId,
                 Items = new List<OrderItem> { new OrderItem { ProductId = 1, Quantity = 50 } }
             };
 
+            var products = new List<Product> {product};
+            var productIds = new List<int> {productId};
+
             var mockService = new Mock<IWarehouseService>();
             mockService.Setup(s => s.GetProduct(productId)).Returns(product);
+            mockService.Setup(s => s.GetProducts(productIds)).Returns(products);
             mockService.Setup(s => s.GetOrder(orderId)).Returns(order);
 
             var controller = BuildControlller(mockService);
@@ -68,9 +73,18 @@ namespace TechChallenge.Tests.Controllers
                 Items = new List<OrderItem> { new OrderItem { ProductId = productId2, Quantity = 50 } }
             };
 
+            var productIds1 = new List<int> { productId1 };
+            var productIds2 = new List<int> { productId2 };
+            var products1 = new List<Product> {product1};
+            var products2 = new List<Product> {product2};
+
             var mockService = new Mock<IWarehouseService>();
             mockService.Setup(s => s.GetProduct(productId1)).Returns(product1);
             mockService.Setup(s => s.GetProduct(productId2)).Returns(product2);
+
+            mockService.Setup(s => s.GetProducts(productIds1)).Returns(products1);
+            mockService.Setup(s => s.GetProducts(productIds2)).Returns(products2);
+
             mockService.Setup(s => s.GetOrder(orderId1)).Returns(order1);
             mockService.Setup(s => s.GetOrder(orderId2)).Returns(order2);
 
@@ -87,14 +101,20 @@ namespace TechChallenge.Tests.Controllers
             int orderId = 1;
 
             var product = new Product { ProductId = productId, QuantityOnHand = 90, ReorderThreshold = 50 };
+
             var order = new Order
             {
                 OrderId = orderId,
                 Items = new List<OrderItem> { new OrderItem { ProductId = productId, Quantity = 50 } }
             };
 
+            var productIds = new List<int> { productId };
+            var products = new List<Product> { product };
+
             var mockService = new Mock<IWarehouseService>();
             mockService.Setup(s => s.GetProduct(productId)).Returns(product);
+            mockService.Setup(s => s.GetProducts(productIds)).Returns(products);
+
             mockService.Setup(s => s.GetOrder(It.IsAny<int>())).Returns((int id) => order);
             mockService.Setup(s => s.DecreaseStockLevel(productId, It.IsAny<int>())).Returns((int id, int quantity) =>
             {
@@ -115,14 +135,20 @@ namespace TechChallenge.Tests.Controllers
             int orderId = 1;
 
             var product = new Product { ProductId = productId, QuantityOnHand = 90, ReorderThreshold = 50 };
+
             var order = new Order
             {
                 OrderId = orderId,
                 Items = new List<OrderItem> { new OrderItem { ProductId = productId, Quantity = 10 } }
             };
 
+            var productIds = new List<int> { productId };
+            var products = new List<Product> { product };
+
             var mockService = new Mock<IWarehouseService>();
             mockService.Setup(s => s.GetProduct(productId)).Returns(product);
+            mockService.Setup(s => s.GetProducts(productIds)).Returns(products);
+
             mockService.Setup(s => s.GetOrder(orderId)).Returns(order);
 
             var controller = BuildControlller(mockService);
@@ -138,14 +164,20 @@ namespace TechChallenge.Tests.Controllers
             int orderId = 1;
 
             var product = new Product { ProductId = productId, QuantityOnHand = 0, ReorderThreshold = 50 };
+
             var order = new Order
             {
                 OrderId = orderId,
                 Items = new List<OrderItem> { new OrderItem { ProductId = productId, Quantity = 10 } }
             };
 
+            var productIds = new List<int> { productId };
+            var products = new List<Product> { product };
+
             var mockService = new Mock<IWarehouseService>();
             mockService.Setup(s => s.GetProduct(productId)).Returns(product);
+            mockService.Setup(s => s.GetProducts(productIds)).Returns(products);
+
             mockService.Setup(s => s.GetOrder(orderId)).Returns(order);
 
             var controller = BuildControlller(mockService);

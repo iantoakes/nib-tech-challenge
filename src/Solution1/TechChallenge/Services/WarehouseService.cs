@@ -56,6 +56,11 @@ namespace TechChallenge.Services
             return product;
         }
 
+        public List<Product> GetProducts(List<int> productIds)
+        {
+            return productIds.Select(GetProduct).ToList();
+        }
+
         public void AddProduct(Product product)
         {
             _productDataStore[product.ProductId] = product;
