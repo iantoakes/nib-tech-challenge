@@ -1,34 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
-using Newtonsoft.Json.Linq;
 using TechChallenge.Models;
+using TechChallenge.Repositories;
 
 namespace TechChallenge.Services
 {
     public class WarehouseService : IWarehouseService
     {
-        private readonly Dictionary<int, Product> _productDataStore;
-        private readonly Dictionary<int, Order> _orderDataStore;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IProductRepository _productRepository;
 
-        public WarehouseService()
+        public WarehouseService(IOrderRepository orderRepository, IProductRepository productRepository)
         {
-            string json = File.ReadAllText(Path.Combine(HttpRuntime.AppDomainAppPath, @"Data\data.json"));
-
-            var jobj = JObject.Parse(json);
-            var products = jobj["products"].Select(Product.FromJToken).ToList();
-            _productDataStore = products.ToDictionary(p => p.ProductId);
-
-            var orders = jobj["orders"].Select(Order.FromJToken).ToList();
-            _orderDataStore = orders.ToDictionary(o => o.OrderId);
+            _orderRepository = orderRepository;
+            _productRepository = productRepository;
         }
 
         public int DecreaseStockLevel(int productId, int quantity)
         {
-            Product product;
-            if (!_productDataStore.TryGetValue(productId, out product))
+            var product = _productRepository.GetProduct(productId);
+            if (product == null)
             {
                 throw new Exception($"Unable to decrease stock level for {productId} as it doesn't exist");
             }
@@ -47,53 +38,62 @@ namespace TechChallenge.Services
 
         public Product GetProduct(int productId)
         {
-            Product product;
-            if (!_productDataStore.TryGetValue(productId, out product))
-            {
-                throw new Exception($"Unable to get product for {productId} as it doesn't exist");
-            }
+            var product = _productRepository.GetProduct(productId);
+            if (product == null) throw new Exception($"Unable to get product for {productId} as it doesn't exist");
 
             return product;
         }
 
         public List<Product> GetProducts(List<int> productIds)
         {
-            return productIds.Select(GetProduct).ToList();
+            if (productIds == null) throw new ArgumentNullException(nameof(productIds));
+            if(productIds.Count == 0) throw new ArgumentException("Expecting a list of product ids", nameof(productIds));
+
+            return _productRepository.GetProducts(productIds);
         }
 
         public void AddProduct(Product product)
         {
-            _productDataStore[product.ProductId] = product;
+            if (product == null) throw new ArgumentNullException(nameof(product));
+
+            _productRepository.AddProduct(product);
         }
 
         public void ReorderProduct(int productId, int quantity)
         {
+            if(productId <= 0) throw new ArgumentOutOfRangeException(nameof(productId));
+            if(quantity <= 0) throw new ArgumentOutOfRangeException(nameof(quantity));
+
+            var product = _productRepository.GetProduct(productId);
+            if(product == null) throw new ArgumentOutOfRangeException(nameof(productId), "Specified product doesn't exist");
+            
             // calls legacy system to reorder product
         }
 
         public Order GetOrder(int orderId)
         {
-            Order order;
-            if (_orderDataStore.TryGetValue(orderId, out order) == false)
-            {
-                throw new Exception($"Unable to get order for {orderId} as it doesn't exist");
-            }
-            return _orderDataStore[orderId];
+            var order = _orderRepository.GetOrder(orderId);
+            if(order == null) throw new ArgumentOutOfRangeException($"Unable to get order for {orderId} as it doesn't exist");
+
+            return order;
         }
 
         public void AddOrder(Order order)
         {
-            _orderDataStore[order.OrderId] = order;
+            if(order == null) throw new ArgumentNullException(nameof(order));
+
+            _orderRepository.AddOrder(order);
         }
 
         public void UpdateOrderStatus(int orderId, string status)
         {
-            Order order;
-            if (_orderDataStore.TryGetValue(orderId, out order) == false)
-            {
-                throw new Exception($"Unable to get update order status to {status} for {orderId} as it doesn't exist");
-            }
-            _orderDataStore[orderId].Status = status;
+            if(string.IsNullOrWhiteSpace(status) || FulfillmentStatus.ValidStatuses.Contains(status) == false) throw new ArgumentException("Invalid status", nameof(status));
+
+            var order = _orderRepository.GetOrder(orderId);
+            if(order == null) throw new ArgumentException("Unable to find matching order", nameof(orderId));
+
+            order.Status = status;
+            _orderRepository.UpdateOrder(order);
         }
     }
 }

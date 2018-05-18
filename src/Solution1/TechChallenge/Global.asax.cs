@@ -4,6 +4,7 @@ using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
 using NLog;
+using TechChallenge.Repositories;
 using TechChallenge.Services;
 
 namespace TechChallenge
@@ -11,6 +12,7 @@ namespace TechChallenge
     public class WebApiApplication : HttpApplication
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        private const string DataFileName = @"Data\data.json";
 
         protected void Application_Start()
         {
@@ -22,7 +24,9 @@ namespace TechChallenge
 
             var config = GlobalConfiguration.Configuration;
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterType<WarehouseService>().As<IWarehouseService>().SingleInstance();
+            builder.RegisterType<WarehouseService>().As<IWarehouseService>();
+            builder.RegisterType<OrderRepository>().As<IOrderRepository>().SingleInstance().WithParameter("dataFileName", DataFileName);
+            builder.RegisterType<ProductRepository>().As<IProductRepository>().SingleInstance().WithParameter("dataFileName", DataFileName);
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
