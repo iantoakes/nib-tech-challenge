@@ -21,5 +21,6 @@ namespace TechChallenge.Services
 
         void AddOrder(Order order);
 
+        List<int> FulfillOrder(List<int> orderIds);
     }
 }

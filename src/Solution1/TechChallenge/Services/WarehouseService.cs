@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TechChallenge.Models;
 using TechChallenge.Repositories;
 
@@ -94,6 +95,37 @@ namespace TechChallenge.Services
 
             order.Status = status;
             _orderRepository.UpdateOrder(order);
+        }
+
+        public List<int> FulfillOrder(List<int> orderIds)
+        {
+            var rejectedOrders = new List<int>();
+            foreach (int orderId in orderIds)
+            {
+                var order = GetOrder(orderId);
+                var productIds = order.Items.Select(i => i.ProductId).ToList();
+                var products = GetProducts(productIds);
+
+                if (products.Any(p => p.QuantityOnHand < order.Items.First(i => i.ProductId == p.ProductId).Quantity))
+                {
+                    rejectedOrders.Add(orderId);
+                    UpdateOrderStatus(order.OrderId, FulfillmentStatus.Error);
+                    continue;
+                }
+
+                foreach (var item in order.Items)
+                {
+                    DecreaseStockLevel(item.ProductId, item.Quantity);
+                    var product = GetProduct(item.ProductId);
+                    if (product.QuantityOnHand < product.ReorderThreshold)
+                    {
+                        ReorderProduct(product.ProductId, product.ReorderAmount);
+                    }
+                    UpdateOrderStatus(order.OrderId, FulfillmentStatus.Success);
+                }
+            }
+
+            return rejectedOrders;
         }
     }
 }

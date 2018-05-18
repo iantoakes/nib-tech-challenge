@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 using NLog;
 using TechChallenge.Models;
@@ -24,31 +22,7 @@ namespace TechChallenge.Controllers
         {
             try
             {
-                var rejectedOrders = new List<int>();
-                foreach (int orderId in fulfilmentRequest.OrderIds)
-                {
-                    var order = _warehouseService.GetOrder(orderId);
-                    var productIds = order.Items.Select(i => i.ProductId).ToList();
-                    var products = _warehouseService.GetProducts(productIds);
-
-                    if (products.Any(p => p.QuantityOnHand < order.Items.First(i => i.ProductId == p.ProductId).Quantity))
-                    {
-                        rejectedOrders.Add(orderId);
-                        _warehouseService.UpdateOrderStatus(order.OrderId, FulfillmentStatus.Error);
-                        continue;
-                    }
-
-                    foreach (var item in order.Items)
-                    {
-                        _warehouseService.DecreaseStockLevel(item.ProductId, item.Quantity);
-                        var product = _warehouseService.GetProduct(item.ProductId);
-                        if (product.QuantityOnHand < product.ReorderThreshold)
-                        {
-                            _warehouseService.ReorderProduct(product.ProductId, product.ReorderAmount);
-                        }
-                        _warehouseService.UpdateOrderStatus(order.OrderId, FulfillmentStatus.Success);
-                    }
-                }
+                var rejectedOrders = _warehouseService.FulfillOrder(fulfilmentRequest.OrderIds);
 
                 var response = rejectedOrders.Count > 0
                     ? new FulfillmentResponse { Unfulfillable = rejectedOrders }
