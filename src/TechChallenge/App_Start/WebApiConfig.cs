@@ -1,5 +1,8 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http.Formatting;
+using System.Web.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
 namespace TechChallenge
@@ -8,11 +11,17 @@ namespace TechChallenge
     {
         public static void Register(HttpConfiguration config)
         {
-            var formatters = GlobalConfiguration.Configuration.Formatters;
-            var jsonFormatter = formatters.JsonFormatter;
-            var settings = jsonFormatter.SerializerSettings;
-            settings.Formatting = Formatting.Indented;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.Clear();
+            var jsonFormatter = new JsonMediaTypeFormatter
+            {
+                SerializerSettings =
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    Formatting = Formatting.Indented,
+                    Converters = new List<JsonConverter> {new StringEnumConverter()}
+                }
+            };
+            config.Formatters.Add(jsonFormatter);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
