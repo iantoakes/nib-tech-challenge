@@ -182,7 +182,11 @@
     <Compile Include="Repositories\IProductRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Services\IOrderService.cs" />
+    <Compile Include="Services\IProductService.cs" />
     <Compile Include="Services\IWarehouseService.cs" />
+    <Compile Include="Services\OrderService.cs" />
+    <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\WarehouseService.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
   </ItemGroup>

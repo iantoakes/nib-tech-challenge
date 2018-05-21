@@ -27,6 +27,8 @@ namespace TechChallenge
             builder.RegisterType<WarehouseService>().As<IWarehouseService>();
             builder.RegisterType<OrderRepository>().As<IOrderRepository>().SingleInstance().WithParameter("dataFileName", DataFileName);
             builder.RegisterType<ProductRepository>().As<IProductRepository>().SingleInstance().WithParameter("dataFileName", DataFileName);
+            builder.RegisterType<OrderService>().As<IOrderService>();
+            builder.RegisterType<ProductService>().As<IProductService>();
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
