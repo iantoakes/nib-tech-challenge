@@ -50,8 +50,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web" />
@@ -109,6 +109,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TechChallenge.DomainLogic\TechChallenge.DomainLogic.csproj">
+      <Project>{ed11bacd-15be-4c4d-96eb-04a1f2b0030d}</Project>
+      <Name>TechChallenge.DomainLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TechChallenge\TechChallenge.csproj">
       <Project>{413726b9-c0df-47a4-9682-3e643d1505ff}</Project>
       <Name>TechChallenge</Name>

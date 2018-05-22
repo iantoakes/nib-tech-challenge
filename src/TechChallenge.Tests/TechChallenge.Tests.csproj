@@ -42,8 +42,8 @@
       <HintPath>..\packages\Moq.4.8.2\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -85,6 +85,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TechChallenge.DomainLogic\TechChallenge.DomainLogic.csproj">
+      <Project>{ed11bacd-15be-4c4d-96eb-04a1f2b0030d}</Project>
+      <Name>TechChallenge.DomainLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TechChallenge\TechChallenge.csproj">
       <Project>{413726B9-C0DF-47A4-9682-3E643D1505FF}</Project>
       <Name>TechChallenge</Name>
