@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TechChallenge.DomainLogic.Models;
 using TechChallenge.Models;
 using TechChallenge.Repositories;
 

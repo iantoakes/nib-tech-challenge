@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 
-namespace TechChallenge.Models
+namespace TechChallenge.DomainLogic.Models
 {
     public class Order
     {

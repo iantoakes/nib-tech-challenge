@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using RestSharp;
+using TechChallenge.DomainLogic.Models;
 using TechChallenge.Models;
 
 namespace TechChallenge.IntegrationTests.Facades

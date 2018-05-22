@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TechChallenge.DomainLogic.Models;
 using TechChallenge.Models;
 
 namespace TechChallenge.Services

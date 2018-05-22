@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using NLog;
+using TechChallenge.DomainLogic.Models;
 using TechChallenge.Models;
 using TechChallenge.Services;
 

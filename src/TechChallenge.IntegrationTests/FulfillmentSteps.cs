@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TechChallenge.DomainLogic.Models;
 using TechChallenge.IntegrationTests.Facades;
 using TechChallenge.Models;
 using TechTalk.SpecFlow;

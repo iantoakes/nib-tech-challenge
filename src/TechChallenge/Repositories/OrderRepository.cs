@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json.Linq;
+using TechChallenge.DomainLogic.Models;
 using TechChallenge.Models;
 
 namespace TechChallenge.Repositories

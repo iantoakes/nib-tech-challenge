@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace TechChallenge.Models
+namespace TechChallenge.DomainLogic.Models
 {
     public class OrderItem
     {

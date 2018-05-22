@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json.Linq;
 using TechChallenge.Controllers;
+using TechChallenge.DomainLogic.Models;
 using TechChallenge.Models;
 using TechChallenge.Services;
 
