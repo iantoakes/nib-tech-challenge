@@ -27,8 +27,10 @@ namespace TechChallenge
 
             var config = GlobalConfiguration.Configuration;
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+
             string path = Path.Combine(HttpRuntime.AppDomainAppPath, DataFileName);
-            builder.Register(c => path).Keyed<string>("DataFilePath");
+            builder.RegisterInstance(path).Keyed<string>("DataFilePath");
+
             RegisterAutofacModules(builder);
 
             var container = builder.Build();
