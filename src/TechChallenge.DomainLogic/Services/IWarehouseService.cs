@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using TechChallenge.DomainLogic.Models;
-using TechChallenge.Models;
 
-namespace TechChallenge.Services
+namespace TechChallenge.DomainLogic.Services
 {
     public interface IWarehouseService
     {

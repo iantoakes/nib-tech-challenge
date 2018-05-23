@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using TechChallenge.DomainLogic.Models;
-using TechChallenge.Models;
-using TechChallenge.Repositories;
+using TechChallenge.DomainLogic.Repositories;
 
-namespace TechChallenge.Services
+namespace TechChallenge.DomainLogic.Services
 {
     public class ProductService : IProductService
     {

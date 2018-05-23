@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using TechChallenge.DomainLogic.Models;
-using TechChallenge.Models;
 
-namespace TechChallenge.Repositories
+namespace TechChallenge.DomainLogic.Repositories
 {
     public interface IProductRepository
     {

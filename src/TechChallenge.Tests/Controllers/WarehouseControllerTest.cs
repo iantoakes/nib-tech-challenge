@@ -8,8 +8,8 @@ using Moq;
 using Newtonsoft.Json.Linq;
 using TechChallenge.Controllers;
 using TechChallenge.DomainLogic.Models;
+using TechChallenge.DomainLogic.Services;
 using TechChallenge.Models;
-using TechChallenge.Services;
 
 namespace TechChallenge.Tests.Controllers
 {

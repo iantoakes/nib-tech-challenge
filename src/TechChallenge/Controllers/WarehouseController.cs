@@ -2,8 +2,8 @@
 using System.Web.Http;
 using NLog;
 using TechChallenge.DomainLogic.Models;
+using TechChallenge.DomainLogic.Services;
 using TechChallenge.Models;
-using TechChallenge.Services;
 
 namespace TechChallenge.Controllers
 {

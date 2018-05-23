@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
+using Autofac.Features.AttributeFilters;
 using Newtonsoft.Json.Linq;
 using TechChallenge.DomainLogic.Models;
-using TechChallenge.Models;
 
-namespace TechChallenge.Repositories
+namespace TechChallenge.DomainLogic.Repositories
 {
     public class ProductRepository : IProductRepository
     {
         private readonly Dictionary<int, Product> _productDataStore;
 
-        public ProductRepository(string dataFileName)
+        public ProductRepository([KeyFilter("DataFilePath")]string dataFileName)
         {
-            string json = File.ReadAllText(Path.Combine(HttpRuntime.AppDomainAppPath, dataFileName));
+            //string json = File.ReadAllText(Path.Combine(HttpRuntime.AppDomainAppPath, dataFileName));
+            string json = File.ReadAllText(dataFileName);
+            //string json = "";
 
             var jobj = JObject.Parse(json);
             var products = jobj["products"].Select(Product.FromJToken).ToList();

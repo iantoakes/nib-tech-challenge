@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TechChallenge.Models
+namespace TechChallenge.DomainLogic.Models
 {
     public static class FulfillmentStatus
     {
