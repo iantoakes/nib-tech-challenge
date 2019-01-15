@@ -23,6 +23,11 @@ namespace TechChallenge.Controllers
         {
             try
             {
+                if (fulfilmentRequest?.OrderIds == null)
+                {
+                    return BadRequest("Request body should contain an array of orderIds");
+                }
+
                 var rejectedOrders = _warehouseService.FulfillOrder(fulfilmentRequest.OrderIds);
 
                 var response = rejectedOrders.Count > 0
